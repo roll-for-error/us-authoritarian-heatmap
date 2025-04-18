@@ -1,0 +1,31 @@
+name: Run Tier 1 Logger
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  run-tier1-logger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run Tier 1 logger
+        working-directory: scraper
+        run: python3 tier1_logger.py
+
+      - name: Commit updated CSV
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add tier1-map/tier1_events.csv
+          git commit -m 'Automated update of Tier 1 events' || echo "No changes to commit"
+          git push
