@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tier 2 Map</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <style>html, body, #map { height: 100%; margin: 0; }</style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([37.8, -96], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 6,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Placeholder for Tier 2 pulsing logic
+    var stateHeat = {
+      "CA": 12,
+      "TX": 18,
+      "FL": 9
+    };
+
+    function colorFromHeat(score) {
+      return score > 15 ? '#ff0000' :
+             score > 10 ? '#ff6600' :
+             score > 5  ? '#ffaa00' :
+             score > 0  ? '#ffff00' : '#ffffff';
+    }
+
+    fetch("heat_log.json")
+      .then(res => res.json())
+      .then(data => {
+        console.log("Heat log loaded (placeholder):", data);
+        // Real state heat overlay would go here
+      });
+  </script>
+</body>
+</html>
