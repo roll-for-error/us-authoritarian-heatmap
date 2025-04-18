@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Authoritarian Firemap – Tier 1 (Final Debug)</title>
+  <title>Authoritarian Firemap – Tier 1 (Final Debug w/ Trim)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
@@ -56,7 +56,7 @@
           .then(data => {
             L.geoJson(data, {
               style: feature => {
-                const stateName = feature.properties.name;
+                const stateName = feature.properties.name.trim();
                 const abbr = STATE_ABBR[stateName] || "UNKNOWN";
                 const score = scores[abbr] || 0;
                 console.log("🎨 STYLE →", stateName, abbr, "Score:", score);
@@ -70,7 +70,7 @@
                 };
               },
               onEachFeature: (feature, layer) => {
-                const stateName = feature.properties.name;
+                const stateName = feature.properties.name.trim();
                 const abbr = STATE_ABBR[stateName] || "UNKNOWN";
                 const score = scores[abbr] || 0;
                 console.log("🧭 FEATURE:", stateName, "→ Key:", abbr, "→ Score:", score);
