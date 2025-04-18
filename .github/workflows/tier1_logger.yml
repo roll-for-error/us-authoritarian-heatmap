@@ -12,13 +12,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0           # ← must be here
+          persist-credentials: true # ← and here
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install dependencies       # <— ADD THIS
+      - name: Install dependencies
         run: pip install feedparser
 
       - name: Run Tier 1 logger
