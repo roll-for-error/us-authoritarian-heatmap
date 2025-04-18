@@ -1,10 +1,12 @@
 
 import feedparser
 import csv
+import json
 from datetime import datetime
-import re
 
-TIER1_PHRASES = ['abolish FINRA and PCAOB; fold into SEC', 'abolish the Federal Reserve (proposed)', 'ban gender identity language in policy', 'bar mixed-status families from federal programs', 'centralize Medicaid oversight under state block-style grants', 'centralize immigration enforcement under federal control', 'defund foreign aid that promotes equity, LGBTQ+, or climate justice', 'defund oversight programs', 'dismantle DEI scorecards, dashboards, and committees', 'eliminate Climate Strategy and climate-related offices', 'eliminate DEI departments, infrastructure, and language', 'eliminate asylum pathways including parole, TPS, and DACA-style discretion', 'eliminate gender-based mandates in aid and health', 'eliminate independent agencies and commissions', 'eliminate judicial review for removal or asylum', 'exclude gender-diverse imagery in government communications', 'expand ICE enforcement zones nationwide', 'install pro-life leadership in health and gender policy', 'mandate E-Verify for all federal contractors', 'mandate prosecution for federal violations aligned with administration ideology', 'prohibit Notices to Report and federal migrant travel', 'prohibit abortion training without opt-in conscience clauses', 'prohibit education on gender identity and sexual orientation', 'propose gold standard and “free banking” alternatives to Federal Reserve', 'redefine “gender equality” to mean support for cisgender women', 'reinstate Remain in Mexico and Asylum Cooperative Agreements', 'remove DEI from all systems, websites, publications', 'remove LGBTQ+ references from government programs', 'remove protections for immigrant children, LGBTQ+ asylum seekers', 'rename DEI offices to “Women, Children, and Families”', 'repeal civil rights statutes and financial oversight mechanisms', 'repeal mandates advancing DEI or reproductive equity', 'repeal waivers enabling environmental or social healthcare spending', 'rescind ACA mandates on contraception and abortion', 'rescind Ryan White HIV/AIDS guidance supporting gender-affirming care', 'restrict access to contraception, emergency contraception', 'restrict prosecutorial discretion (esp. immigration)', 'revoke funding from progressive-aligned nonprofits', 'revoke prosecutorial discretion for immigration enforcement', 'subject nonprofit grantees to loyalty vetting']
+# Load rules from JSON file
+with open("tier1_rules.json", "r") as f:
+    TIER1_RULES = json.load(f)
 
 US_STATES = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
@@ -34,44 +36,42 @@ def extract_state(text):
 def parse_feed(name, url):
     feed = feedparser.parse(url)
     entries = []
+
     for entry in feed.entries:
         title = entry.get("title", "")
         summary = entry.get("summary", "")
         link = entry.get("link", "")
         published = entry.get("published", "") or entry.get("updated", "")
         pub_date = None
+
         try:
             pub_date = datetime.strptime(published[:16], "%a, %d %b %Y")
-        except Exception:
+        except:
             try:
                 pub_date = datetime.strptime(published[:10], "%Y-%m-%d")
             except:
                 print("[⚠️] Failed to parse date:", published)
                 continue
-        print("---")
-        print("[Feed:", name, "]")
-        print("Title:", title)
-        print("Date parsed:", pub_date)
-        print("Passes date filter:", pub_date >= START_DATE)
 
         if pub_date < START_DATE:
-            print("⏩ Skipping — before cutoff")
             continue
 
         full_text = (title + " " + summary).lower()
-        for phrase in TIER1_PHRASES:
-            if phrase.lower() in full_text:
-                print("[✅ MATCH] Phrase:", phrase)
-                state = extract_state(title + " " + summary)
+
+        for rule_name, rule_data in TIER1_RULES.items():
+            match_count = sum(1 for kw in rule_data["keywords"] if kw in full_text)
+            if match_count >= rule_data["required"]:
+                print(f"[✅ MATCH] Rule: {rule_name} | Title: {title}")
+                state = extract_state(full_text)
                 entries.append({
                     "date": pub_date.strftime("%Y-%m-%d"),
-                    "phrase": phrase,
+                    "phrase": rule_name,
                     "state": state,
                     "source": name,
                     "url": link,
                     "weight": 1
                 })
-                break
+                break  # avoid double logging same entry
     return entries
 
 def write_to_csv(entries):
