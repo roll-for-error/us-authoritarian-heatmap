@@ -2,8 +2,8 @@ name: Run Tier 1 Logger
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *'    # Runs every 6 hours
+  workflow_dispatch:         # Allows manual triggering
 
 jobs:
   run-tier1-logger:
@@ -13,8 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0           # ← must be here
-          persist-credentials: true # ← and here
+          fetch-depth: 0
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,10 +28,15 @@ jobs:
         working-directory: scraper
         run: python3 tier1_logger.py
 
-      - name: Commit updated CSV
+      - name: Convert CSV to state scores
+        working-directory: scraper
+        run: python3 convert_csv_to_json.py
+
+      - name: Commit updated CSV and JSON
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add tier1-map/tier1_events.csv
-          git commit -m 'Automated update of Tier 1 events' || echo "No changes to commit"
+          git add tier1-map/state_scores.json
+          git commit -m 'Automated update of Tier 1 events and state scores' || echo "No changes to commit"
           git push
