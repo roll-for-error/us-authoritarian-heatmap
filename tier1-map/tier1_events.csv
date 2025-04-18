@@ -1,30 +1,4 @@
-date,phrase,state,source,url,weight2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61177/luigi-mangione-indictment-united-healthcare-death-penalty,1
-2025-04-17,legal_warfare,New York,NPR,https://www.npr.org/2025/04/17/nx-s1-5367582/trump-new-york-wind-energy-offshore,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368206/cfpb-layoffs-rif,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368254/hud-headquarters-d-c-for-sale-scott-turner-doge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/1245273518/raising-kids-is-costly-tariffs-will-make-it-even-more-expensive,1
-2025-04-17,legal_warfare,New Mexico,NPR,https://www.npr.org/2025/04/17/nx-s1-5364960/trumps-forest-service-cuts-have-people-in-tinder-dry-new-mexico-on-edge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5366723/tariffs-impact-baby-products,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61118/appeals-court-deportation-abrego-garcia,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5349435/us-census-bureau-data-decennial,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61177/luigi-mangione-indictment-united-healthcare-death-penalty,1
-2025-04-17,legal_warfare,New York,NPR,https://www.npr.org/2025/04/17/nx-s1-5367582/trump-new-york-wind-energy-offshore,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368206/cfpb-layoffs-rif,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368254/hud-headquarters-d-c-for-sale-scott-turner-doge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/1245273518/raising-kids-is-costly-tariffs-will-make-it-even-more-expensive,1
-2025-04-17,legal_warfare,New Mexico,NPR,https://www.npr.org/2025/04/17/nx-s1-5364960/trumps-forest-service-cuts-have-people-in-tinder-dry-new-mexico-on-edge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5366723/tariffs-impact-baby-products,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61118/appeals-court-deportation-abrego-garcia,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5349435/us-census-bureau-data-decennial,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61177/luigi-mangione-indictment-united-healthcare-death-penalty,1
-2025-04-17,legal_warfare,New York,NPR,https://www.npr.org/2025/04/17/nx-s1-5367582/trump-new-york-wind-energy-offshore,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368206/cfpb-layoffs-rif,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368254/hud-headquarters-d-c-for-sale-scott-turner-doge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/1245273518/raising-kids-is-costly-tariffs-will-make-it-even-more-expensive,1
-2025-04-17,legal_warfare,New Mexico,NPR,https://www.npr.org/2025/04/17/nx-s1-5364960/trumps-forest-service-cuts-have-people-in-tinder-dry-new-mexico-on-edge,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5366723/tariffs-impact-baby-products,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61118/appeals-court-deportation-abrego-garcia,1
-2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5349435/us-census-bureau-data-decennial,1
+date,phrase,state,source,url,weight
 2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/g-s1-61177/luigi-mangione-indictment-united-healthcare-death-penalty,1
 2025-04-17,legal_warfare,New York,NPR,https://www.npr.org/2025/04/17/nx-s1-5367582/trump-new-york-wind-energy-offshore,1
 2025-04-17,legal_warfare,Federal,NPR,https://www.npr.org/2025/04/17/nx-s1-5368206/cfpb-layoffs-rif,1
