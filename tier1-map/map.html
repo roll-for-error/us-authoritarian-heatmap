@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Authoritarian Firemap – Tier 1</title>
+  <title>Authoritarian Firemap – Tier 1 (Debug Mode)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
@@ -31,6 +31,8 @@
       .then(response => response.json())
       .then(scores => {
         const maxScore = Math.max(...Object.values(scores));
+        console.log("🔥 MAX SCORE:", maxScore);
+        console.log("📊 Scores:", scores);
 
         fetch('https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
           .then(res => res.json())
@@ -39,6 +41,7 @@
               style: feature => {
                 const abbr = feature.properties.postal.toUpperCase();
                 const score = scores[abbr] || 0;
+                console.log("🎨 STYLE →", feature.properties.name, abbr, "Score:", score);
                 return {
                   fillColor: colorScale(score, maxScore),
                   weight: 1,
@@ -51,6 +54,7 @@
               onEachFeature: (feature, layer) => {
                 const abbr = feature.properties.postal.toUpperCase();
                 const score = scores[abbr] || 0;
+                console.log("🧭 FEATURE:", feature.properties.name, "→ Key:", abbr, "→ Score:", score);
                 layer.bindPopup(`<strong>${feature.properties.name}</strong><br>Key: ${abbr}<br>Score: ${score}`);
               }
             }).addTo(map);
