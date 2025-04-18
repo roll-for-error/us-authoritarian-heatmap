@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Authoritarian Firemap – Tier 1 (Debug)</title>
+  <title>Authoritarian Firemap – Tier 1 (Final Debug)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
@@ -20,7 +20,7 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // State name to abbreviation map
+    // State name to abbreviation map (including DC)
     const STATE_ABBR = {
       "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
       "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
@@ -34,7 +34,7 @@
       "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
       "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
       "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
-      "Wisconsin": "WI", "Wyoming": "WY"
+      "Wisconsin": "WI", "Wyoming": "WY", "District of Columbia": "DC"
     };
 
     function colorScale(score, maxScore) {
