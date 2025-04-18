@@ -3,6 +3,7 @@ import feedparser
 import csv
 import json
 from datetime import datetime
+import os
 
 # Load rules from JSON file
 with open("tier1_rules.json", "r") as f:
@@ -33,7 +34,16 @@ def extract_state(text):
             return state
     return "Federal"
 
-def parse_feed(name, url):
+def load_existing_urls():
+    urls = set()
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                urls.add(row["url"])
+    return urls
+
+def parse_feed(name, url, seen_urls):
     feed = feedparser.parse(url)
     entries = []
 
@@ -56,12 +66,15 @@ def parse_feed(name, url):
         if pub_date < START_DATE:
             continue
 
+        if link in seen_urls:
+            continue
+
         full_text = (title + " " + summary).lower()
 
         for rule_name, rule_data in TIER1_RULES.items():
             match_count = sum(1 for kw in rule_data["keywords"] if kw in full_text)
             if match_count >= rule_data["required"]:
-                print(f"[✅ MATCH] Rule: {rule_name} | Title: {title}")
+                print(f"[✅ NEW MATCH] Rule: {rule_name} | Title: {title}")
                 state = extract_state(full_text)
                 entries.append({
                     "date": pub_date.strftime("%Y-%m-%d"),
@@ -71,7 +84,8 @@ def parse_feed(name, url):
                     "url": link,
                     "weight": 1
                 })
-                break  # avoid double logging same entry
+                seen_urls.add(link)
+                break
     return entries
 
 def write_to_csv(entries):
@@ -86,9 +100,10 @@ def write_to_csv(entries):
     print(len(entries), "new entries written to", OUTPUT_FILE)
 
 def run():
+    seen_urls = load_existing_urls()
     all_entries = []
     for name, url in RSS_FEEDS.items():
-        entries = parse_feed(name, url)
+        entries = parse_feed(name, url, seen_urls)
         all_entries.extend(entries)
     write_to_csv(all_entries)
 
