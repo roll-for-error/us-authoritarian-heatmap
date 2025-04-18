@@ -20,12 +20,11 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Improved visibility color scale using HSL
     function colorScale(score, maxScore) {
       if (!score || !maxScore) return '#f7f7f7';
       const ratio = score / maxScore;
-      const hue = 10 + (1 - ratio) * 45;  // red (10) to yellow (55)
-      return `hsl(${hue}, 100%, 45%)`;    // strong contrast
+      const hue = 10 + (1 - ratio) * 45;
+      return `hsl(${hue}, 100%, 45%)`;
     }
 
     fetch('state_scores.json')
@@ -38,7 +37,7 @@
           .then(data => {
             L.geoJson(data, {
               style: feature => {
-                const abbr = feature.properties.postal;
+                const abbr = feature.properties.postal.toUpperCase();
                 const score = scores[abbr] || 0;
                 return {
                   fillColor: colorScale(score, maxScore),
@@ -50,9 +49,9 @@
                 };
               },
               onEachFeature: (feature, layer) => {
-                const abbr = feature.properties.postal;
+                const abbr = feature.properties.postal.toUpperCase();
                 const score = scores[abbr] || 0;
-                layer.bindPopup(`<strong>${feature.properties.name}</strong><br>Score: ${score}`);
+                layer.bindPopup(`<strong>${feature.properties.name}</strong><br>Key: ${abbr}<br>Score: ${score}`);
               }
             }).addTo(map);
           });
