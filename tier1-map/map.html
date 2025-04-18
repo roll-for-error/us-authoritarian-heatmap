@@ -20,12 +20,12 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Smooth color gradient based on ratio
+    // Improved visibility color scale using HSL
     function colorScale(score, maxScore) {
-      if (score === 0 || maxScore === 0) return '#f7f7f7';  // No signal
+      if (!score || !maxScore) return '#f7f7f7';
       const ratio = score / maxScore;
-      const hue = 45 - (ratio * 45); // from yellow (45°) to red (0°)
-      return `hsl(${hue}, 90%, 60%)`;
+      const hue = 10 + (1 - ratio) * 45;  // red (10) to yellow (55)
+      return `hsl(${hue}, 100%, 45%)`;    // strong contrast
     }
 
     fetch('state_scores.json')
