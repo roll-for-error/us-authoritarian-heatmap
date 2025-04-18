@@ -39,15 +39,29 @@ def parse_feed(name, url):
         summary = entry.get("summary", "")
         link = entry.get("link", "")
         published = entry.get("published", "") or entry.get("updated", "")
+        pub_date = None
         try:
             pub_date = datetime.strptime(published[:16], "%a, %d %b %Y")
-        except:
-            continue
+        except Exception:
+            try:
+                pub_date = datetime.strptime(published[:10], "%Y-%m-%d")
+            except:
+                print("[⚠️] Failed to parse date:", published)
+                continue
+        print("---")
+        print("[Feed:", name, "]")
+        print("Title:", title)
+        print("Date parsed:", pub_date)
+        print("Passes date filter:", pub_date >= START_DATE)
+
         if pub_date < START_DATE:
+            print("⏩ Skipping — before cutoff")
             continue
+
         full_text = (title + " " + summary).lower()
         for phrase in TIER1_PHRASES:
             if phrase.lower() in full_text:
+                print("[✅ MATCH] Phrase:", phrase)
                 state = extract_state(title + " " + summary)
                 entries.append({
                     "date": pub_date.strftime("%Y-%m-%d"),
@@ -69,7 +83,7 @@ def write_to_csv(entries):
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         for entry in entries:
             writer.writerow(entry)
-    print(f"{len(entries)} new entries written to {OUTPUT_FILE}.")
+    print(len(entries), "new entries written to", OUTPUT_FILE)
 
 def run():
     all_entries = []
