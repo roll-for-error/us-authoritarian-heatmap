@@ -2,8 +2,8 @@ name: Run Tier 1 Logger
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Every 6 hours
-  workflow_dispatch:      # Allows manual triggering
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   run-tier1-logger:
@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
+      - name: Install dependencies       # <— ADD THIS
+        run: pip install feedparser
 
       - name: Run Tier 1 logger
         working-directory: scraper
